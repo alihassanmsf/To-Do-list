@@ -9,6 +9,16 @@ class Task extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'description',
+        'due_date',
+        'priority',
+        'status',
+        'created_by',
+        'assigned_for',
+        ];
+
     public function users()
     {
         return $this->hasMany(User::class, 'role_id');
