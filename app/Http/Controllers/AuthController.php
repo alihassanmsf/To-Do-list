@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -20,7 +24,7 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($request->only('email', 'password'))) {
-            return redirect()->intended('task'); // Redirect to dashboard
+            return redirect()->intended('tasks'); // Redirect to dashboard
         }
 
         return back()->withErrors(['email' => 'Invalid credentials']);
@@ -28,11 +32,18 @@ class AuthController extends Controller
 
     public function showRegisterForm()
     {
+
         return view('auth.register');
     }
 
     public function register(Request $request)
     {
+        $role = Role::where('name', 'User')->first();
+
+        if (!$role) {
+            return back()->withErrors(['role' => 'Role "User" not found. Please ensure the role exists in the roles table.']);
+        }
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
@@ -42,9 +53,9 @@ class AuthController extends Controller
         User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'role_id' => $role->id,
             'password' => Hash::make($request->password),
         ]);
-
         return redirect()->route('login')->with('success', 'Account created successfully.');
     }
 
