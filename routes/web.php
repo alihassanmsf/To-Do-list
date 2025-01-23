@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TasksController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,8 +25,10 @@ Route::get('/', function () {
 //    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 //});
 
-
-Route::resource('task', TaskController::class);
+Route::middleware(['auth', 'role:Admin'])->group(function (){
+    Route::get('/dashboard',[AdminController::class,'index'])->name('dashboard');
+});
+Route::resource('tasks', TasksController::class);
 Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
