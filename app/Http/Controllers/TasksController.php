@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TasksController extends Controller
 {
@@ -41,7 +42,7 @@ class TasksController extends Controller
             'description' => 'required|string',
             'due_date' => 'required|date',
             'priority' => 'required|string|in:low,medium,high',
-            'status' => 'required|in:open,closed,pending', // Adjust if you add 'pending'
+            'status' => 'required|in:pending,in_progress,completed',
             'assigned_for' => 'nullable|exists:users,id',
         ]);
 
@@ -57,6 +58,21 @@ class TasksController extends Controller
     public function show(string $id)
     {
         //
+    }
+
+    public function completeTask(Task $task)
+    {
+        // Check if the task is not already completed
+        if ($task->status !== 'completed') {
+            $task->update([
+                'status' => 'completed',
+                'completed_by' => Auth::id(), // Set the authenticated user's ID
+            ]);
+
+            return redirect()->back()->with('success', 'Task marked as completed.');
+        }
+
+        return redirect()->back()->with('error', 'Task is already completed.');
     }
 
     /**
@@ -78,7 +94,7 @@ class TasksController extends Controller
             'description' => 'required|string',
             'due_date' => 'required|date',
             'priority' => 'required|string|in:low,medium,high',
-            'status' => 'required|string|in:pending,in_progress,completed',
+            'status' => 'required|in:pending,in_progress,completed',
             'assigned_for' => 'nullable|exists:users,id',
         ]);
 
