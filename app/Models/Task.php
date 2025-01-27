@@ -17,10 +17,21 @@ class Task extends Model
         'status',
         'created_by',
         'assigned_for',
+        'completed_by',
         ];
 
-    public function users()
+
+    // Relationship to the User who created the task
+    public function creator()
     {
-        return $this->hasMany(User::class, 'role_id');
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    /**
+     * Relationship to the user the task is assigned for.
+     */
+    public function assignedUser()
+    {
+        return $this->belongsTo(User::class, 'assigned_for');
     }
 }
