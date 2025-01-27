@@ -13,7 +13,7 @@ class AdminController extends Controller
         $totalUsers = User::all()->count();
         $totalTasks = Task::all()->count();
         $totalPandingTasks = Task::where('status', 'pending')->count();
-        $totalCompletedTasks = Task::where('status', 'closed')->count();
+        $totalCompletedTasks = Task::where('status', 'completed')->count();
         $totalOpenedTasks = Task::where('status', 'open')->count();
 
 
