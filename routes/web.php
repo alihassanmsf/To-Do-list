@@ -26,9 +26,12 @@ Route::get('/', function () {
 //});
 
 Route::middleware(['auth', 'role:Admin'])->group(function (){
-    Route::get('/dashboard',[AdminController::class,'index'])->name('dashboard');
+    Route::get('/dashboard',[AdminController::class,'index'])->name('admin.dashboard');
 });
 Route::resource('tasks', TasksController::class);
+
+Route::post('/tasks/{task}/complete', [TasksController::class, 'completeTask'])->name('tasks.complete');
+## Auth region
 Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
