@@ -24,7 +24,9 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($request->only('email', 'password'))) {
-            return redirect()->intended('tasks'); // Redirect to dashboard
+            if (auth()->user()->role->name == 'Admin') {
+                return redirect()->route('admin.dashboard');
+            }
         }
 
         return back()->withErrors(['email' => 'Invalid credentials']);
