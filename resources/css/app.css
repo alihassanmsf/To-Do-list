@@ -1,0 +1,101 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+
+body {
+    background-color: #f5f7fa;
+    font-family: 'Arial', sans-serif;
+}
+.modern-card {
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.modern-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+}
+.card-header {
+    background: linear-gradient(135deg, #007bff, #00d4ff);
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 1rem;
+}
+.card-body {
+    padding: 2rem;
+    text-align: center;
+}
+.card-footer {
+    background-color: #f1f1f1;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+.task-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 1rem;
+}
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.user-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #007bff;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+.btn-modern {
+    border-radius: 50px;
+    padding: 0.7rem 1.5rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+.btn-modern-primary {
+    background: linear-gradient(135deg, #007bff, #00d4ff);
+    border: none;
+    color: white;
+}
+.btn-modern-primary:hover {
+    background: linear-gradient(135deg, #0056b3, #00a1cc);
+    transform: translateY(-3px);
+}
+.btn-modern-outline {
+    border: 2px solid #007bff;
+    color: #007bff;
+    background: none;
+}
+.btn-modern-outline:hover {
+    background: #007bff;
+    color: white;
+    transform: translateY(-3px);
+}
+.task-details {
+    text-align: left;
+    margin-top: 1.5rem;
+}
+.task-details span {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+.task-details strong {
+    color: #333;
+}
+
+
