@@ -27,6 +27,9 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'role:Admin'])->group(function (){
     Route::get('/dashboard',[AdminController::class,'index'])->name('admin.dashboard');
+    Route::get('/dashboard/users/list',[AdminController::class,'usersList'])->name('admin.users.list');
+    Route::get('/dashboard/users/create-user',[AdminController::class,'createUser'])->name('admin.create-user');
+    Route::post('/dashboard/users',[AdminController::class,'storeUser'])->name('admin.store-user');
 });
 Route::resource('tasks', TasksController::class);
 
