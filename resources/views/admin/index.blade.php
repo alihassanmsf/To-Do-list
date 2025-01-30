@@ -19,6 +19,10 @@
                     class="fas fa-home mr-2"></i> Dashboard</a>
             <a href="#" class="block py-2.5 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600"><i
                     class="fas fa-user mr-2"></i> Profile</a>
+            <a href="{{route('admin.users.list')}}" class="block py-2.5 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600"><i
+                    class="fas fa-user mr-2"></i> Users List</a>
+            <a href="#" class="block py-2.5 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600"><i
+                    class="fas fa-user mr-2"></i> Tasks List</a>
             <a href="#" class="block py-2.5 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600"><i
                     class="fas fa-cog mr-2"></i> Settings</a>
             <form  method="POST" action="{{route('logout')}}">
@@ -37,7 +41,7 @@
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-bold text-gray-700">Welcome Back</h2>
             <div class="flex space-x-4">
-                <a  class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500 no-underline">Add User</a>
+                <a href="{{route('admin.create-user')}}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500 no-underline">Add User</a>
                 <a href="{{route('tasks.create')}}" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-500 no-underline">Add Task</a>
                 <button class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-500">Generate Report</button>
             </div>
@@ -87,6 +91,7 @@
                         <th class="p-2">Status</th>
                     </tr>
                     </thead>
+
                     <tbody>
                     <tr class="border-b">
                         <td class="p-2">1</td>
