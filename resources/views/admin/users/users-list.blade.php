@@ -3,81 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elegant User Directory</title>
+    <title>Professional User Directory</title>
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
         rel="stylesheet"
     />
     <style>
         body {
-            background-color: #eef1f6;
+            background-color: #f5f7fa;
             font-family: 'Arial', sans-serif;
         }
-        .user-container {
+        .table-container {
             max-width: 1000px;
             margin: 3rem auto;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-        }
-        .user-card {
             background: white;
-            border-radius: 12px;
+            border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
             overflow: hidden;
-            padding: 1.5rem;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            width: 280px;
         }
-        .user-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        .table-header {
+            background: linear-gradient(135deg, #007bff, #00d4ff);
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 10px 10px 0 0;
+        }
+        .users-table {
+            width: 100%;
+            margin: 0;
+            border-collapse: collapse;
+        }
+        .users-table th, .users-table td {
+            text-align: left;
+            padding: 15px;
+            font-size: 1rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .users-table th {
+            background-color: #f1f1f1;
+            color: #333;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        .users-table tr:hover {
+            background-color: #f8f9fa;
+            transition: background 0.3s ease;
         }
         .user-avatar {
-            width: 70px;
-            height: 70px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background-color: #007bff;
             color: white;
-            display: flex;
+            display: inline-flex;
             justify-content: center;
             align-items: center;
-            font-size: 1.8rem;
+            font-size: 1rem;
             font-weight: bold;
-            margin: 0 auto 1rem;
+            margin-right: 10px;
+        }
+        .d-flex {
+            display: flex;
+            align-items: center;
         }
         .user-name {
-            font-weight: bold;
-            font-size: 1.3rem;
+            font-weight: 600;
+            font-size: 1.1rem;
             color: #212529;
-            margin-bottom: 0.5rem;
         }
-        .user-role {
-            font-size: 1rem;
-            color: #6c757d;
-            background: #f1f3f5;
-            padding: 5px 12px;
-            border-radius: 20px;
-            display: inline-block;
+        .action-buttons {
+            display: flex;
+            gap: 10px;
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <h2 class="text-center my-4 text-primary">User Directory</h2>
-    <div class="user-container">
-        @foreach($users as $user)
-            <div class="user-card">
-                <div class="user-avatar">
-                    {{ substr($user->name, 0, 1) }}
-                </div>
-                <div class="user-name">{{$user->name}}</div>
-                <div class="user-role">{{$user->role ?? 'Member'}}</div>
-            </div>
-        @endforeach
+<div class="container table-container">
+    <div class="table-header">
+        User Directory
     </div>
+    <table class="users-table">
+        <thead>
+        <tr>
+            <th>Avatar</th>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($users as $user)
+            <tr>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <div class="user-avatar">
+                            {{ substr($user->name, 0, 1) }}
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="user-name">{{$user->name}}</div>
+                </td>
+                <td>{{$user->role->name ?? 'Member'}}</td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary btn-sm" >Edit</button>
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </div>
+                </td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
 </div>
 <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
