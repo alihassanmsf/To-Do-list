@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class TasksController extends Controller
     }
     public function index()
     {
-        $tasks = Task::all();
+        $tasks = Task::where('assigned_for', Auth::id())->get();
         return view('tasks.index', compact('tasks'));
     }
 
@@ -47,7 +48,14 @@ class TasksController extends Controller
         ]);
 
         $validated['created_by'] = auth()->id(); // Set the creator
-        Task::create($validated);
+        $task = Task::create($validated);
+
+        Activity::create([
+            'user_id' => Auth::id(),
+            'action' => 'Create a Task',
+            'target_type' => 'Task',
+            'target_id' => $task->id,
+        ]);
 
         return redirect()->route('tasks.index')->with('success', 'Task created successfully!');
     }
@@ -69,10 +77,38 @@ class TasksController extends Controller
                 'completed_by' => Auth::id(), // Set the authenticated user's ID
             ]);
 
+            Activity::create([
+                'user_id' => Auth::id(),
+                'action' => 'Update a Task Status To Complete',
+                'target_type' => 'Task',
+                'target_id' => $task->id,
+            ]);
+
             return redirect()->back()->with('success', 'Task marked as completed.');
         }
 
         return redirect()->back()->with('error', 'Task is already completed.');
+    }
+    public function triggerToInProgress(Task $task)
+    {
+        // Check if the task is not already in progress
+        if ($task->status !== 'in_progress') {
+            $task->update([
+                'status' => 'in_progress',
+                'completed_by' => Auth::id(), // Set the authenticated user's ID
+            ]);
+
+            Activity::create([
+                'user_id' => Auth::id(),
+                'action' => 'Update a Task Status To In Progress',
+                'target_type' => 'Task',
+                'target_id' => $task->id,
+            ]);
+
+            return redirect()->back()->with('success', 'Task marked as in progress.');
+        }
+
+        return redirect()->back()->with('error', 'Task is already in progress.');
     }
 
     /**
@@ -99,6 +135,13 @@ class TasksController extends Controller
         ]);
 
         $task->update($validated);
+
+        Activity::create([
+            'user_id' => Auth::id(),
+            'action' => 'Update a Task',
+            'target_type' => 'Task',
+            'target_id' => $task->id,
+        ]);
 
         return redirect()->route('tasks.index')->with('success', 'Task updated successfully!');
     }
