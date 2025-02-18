@@ -17,14 +17,14 @@
         <nav class="mt-6">
             <a href="#" class="block py-2.5 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600"><i
                     class="fas fa-home mr-2"></i> Dashboard</a>
-            <a href="#" class="block py-2.5 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600"><i
+            <a href="{{ route('profile') }}" class="block py-2.5 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600"><i
                     class="fas fa-user mr-2"></i> Profile</a>
-            <a href="{{route('admin.users.list')}}" class="block py-2.5 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600"><i
+            <a href="{{route('admin.manage-users')}}" class="block py-2.5 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600"><i
                     class="fas fa-user mr-2"></i> Users List</a>
-            <a href="#" class="block py-2.5 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600"><i
+            <a href="{{route('admin.manage-tasks')}}" class="block py-2.5 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600"><i
                     class="fas fa-user mr-2"></i> Tasks List</a>
-            <a href="#" class="block py-2.5 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600"><i
-                    class="fas fa-cog mr-2"></i> Settings</a>
+{{--            <a href="#" class="block py-2.5 px-4 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600"><i--}}
+{{--                    class="fas fa-cog mr-2"></i> Settings</a>--}}
             <form  method="POST" action="{{route('logout')}}">
                 @csrf
                 <button type="submit"
@@ -42,7 +42,7 @@
             <h2 class="text-2xl font-bold text-gray-700">Welcome Back</h2>
             <div class="flex space-x-4">
                 <a href="{{route('admin.create-user')}}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500 no-underline">Add User</a>
-                <a href="{{route('tasks.create')}}" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-500 no-underline">Add Task</a>
+                <a href="{{route('admin.create-task')}}" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-500 no-underline">Add Task</a>
                 <button class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-500">Generate Report</button>
             </div>
         </div>
@@ -62,8 +62,8 @@
             </div>
             <!-- Card 2 -->
             <div class="bg-white p-4 rounded-lg shadow-lg">
-                <h3 class="text-gray-700 font-bold">Open Tasks</h3>
-                <p class="text-3xl font-bold text-red-600 mt-2">{{$totalOpenedTasks}}</p>
+                <h3 class="text-gray-700 font-bold">In progress Tasks</h3>
+                <p class="text-3xl font-bold text-red-600 mt-2">{{$totalInProgressTasks}}</p>
             </div>
 
             <!-- Card 3 -->
@@ -88,29 +88,39 @@
                         <th class="p-2">#</th>
                         <th class="p-2">Activity</th>
                         <th class="p-2">Time</th>
+                        <th class="p-2">Task Name</th>
                         <th class="p-2">Status</th>
                     </tr>
                     </thead>
 
                     <tbody>
+                    @foreach($activities as $activity)
                     <tr class="border-b">
-                        <td class="p-2">1</td>
-                        <td class="p-2">User registration</td>
-                        <td class="p-2">2 hours ago</td>
-                        <td class="p-2 text-green-600">Completed</td>
+                        <td class="p-2">{{$activity->id}}</td>
+                        <td class="p-2">{{$activity->action}}</td>
+                        <td class="p-2">{{ $activity->created_at->diffForHumans() }}</td>
+                        @if(isset($activity->task))
+                            <td class="p-2">{{ $activity->task->name}}</td>
+                            <td
+                                class=" {{$activity->task->status ==='pending'?'p-2 text-red-600':''}} {{$activity->task->status ==='in_progress'?'p-2 text-yellow-600':''}} {{$activity->task->status ==='completed'?'p-2 text-green-600':''}}">
+                                {{$activity->task->status}}
+                            </td>
+                        @endif
+
                     </tr>
-                    <tr class="border-b">
-                        <td class="p-2">2</td>
-                        <td class="p-2">Payment processed</td>
-                        <td class="p-2">5 hours ago</td>
-                        <td class="p-2 text-green-600">Completed</td>
-                    </tr>
-                    <tr>
-                        <td class="p-2">3</td>
-                        <td class="p-2">Order shipped</td>
-                        <td class="p-2">1 day ago</td>
-                        <td class="p-2 text-yellow-600">Pending</td>
-                    </tr>
+                    @endforeach
+{{--                    <tr class="border-b">--}}
+{{--                        <td class="p-2">2</td>--}}
+{{--                        <td class="p-2">Payment processed</td>--}}
+{{--                        <td class="p-2">5 hours ago</td>--}}
+{{--                        <td class="p-2 text-green-600">Completed</td>--}}
+{{--                    </tr>--}}
+{{--                    <tr>--}}
+{{--                        <td class="p-2">3</td>--}}
+{{--                        <td class="p-2">Order shipped</td>--}}
+{{--                        <td class="p-2">1 day ago</td>--}}
+{{--                        <td class="p-2 text-yellow-600">Pending</td>--}}
+{{--                    </tr>--}}
                     </tbody>
                 </table>
             </div>
