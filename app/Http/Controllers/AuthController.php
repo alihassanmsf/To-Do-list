@@ -85,14 +85,14 @@ class AuthController extends Controller
             $user = auth()->user();
 
 
-                if ($user->role->name === 'Admin') {
-                    return redirect()->route('admin.dashboard');
-                } elseif ($user->role->name === 'Manager') {
-                    return redirect()->route('manager.dashboard');
+            if ($user->role->name === 'Admin') {
+                return redirect()->route('admin.dashboard');
+            } elseif ($user->role->name === 'Manager') {
+                return redirect()->route('manager.dashboard');
 //                    dd('You Have logged in as a Manager');
-                } elseif ($user->role->name === 'User') {
-                    return redirect()->route('tasks.index');
-                }
+            } elseif ($user->role->name === 'User') {
+                return redirect()->route('tasks.index');
+            }
 
 
             Activity::create([
@@ -103,9 +103,9 @@ class AuthController extends Controller
             ]);
         }
 
-            return back()->withErrors([
-                'email' => 'The provided credentials do not match our records.',
-            ]);
+        return back()->with(
+            'email', 'The provided credentials do not match our records.'
+        );
 
     }
 
@@ -154,7 +154,7 @@ class AuthController extends Controller
     {
         $request->validate(['email' => 'required|email']);
         $resetEmail = $request->email;
-        $user = User::where('email',$resetEmail)->first();
+        $user = User::where('email', $resetEmail)->first();
         $status = Password::sendResetLink(
             $request->only('email')
         );
@@ -185,7 +185,7 @@ class AuthController extends Controller
         ]);
 
         $resetEmail = $request->email;
-        $user = User::where('email',$resetEmail)->first();
+        $user = User::where('email', $resetEmail)->first();
 
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
