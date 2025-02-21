@@ -1,94 +1,77 @@
-<!-- resources/views/auth/passwords/email.blade.php -->
 @extends('layouts.app')
 
 @section('content')
+    <!-- ✅ Background & Full Page Centering -->
+    <div class="min-h-screen flex items-center justify-center px-4  relative"
+         :class="darkMode ? 'bg-gray-900 text-gray-100' : 'bg-gray-50 text-gray-900'">
 
-    <style>
+        <!-- ✅ Password Reset Card (Now Properly Centered) -->
+        <div class="w-full max-w-md absolute  transform -translate-y-1/1 rounded-3xl shadow-lg overflow-hidden transition-all duration-300 animate-fade-in"
+             :class="darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'">
 
+            <!-- ✅ Card Header with Hover Effect -->
+            <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-center py-6 transition duration-300 hover:scale-105">
+                <h2 class="text-2xl font-bold text-white">{{ __('passwords.Reset Password') }}</h2>
+            </div>
 
-        .card {
-            border: none;
-            border-radius: 20px;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+            <!-- ✅ Card Body -->
+            <div class="px-8 py-8">
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-        }
-
-        .form-control {
-            border: none;
-            border-radius: 12px;
-            background: #f8f9fa;
-            transition: all 0.3s ease;
-        }
-
-        .form-control:focus {
-            background: #ffffff;
-            box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
-        }
-
-        .btn {
-            border: none;
-            border-radius: 12px;
-            background: linear-gradient(145deg, #6a11cb, #2575fc);
-            transition: all 0.3s ease;
-        }
-
-        .btn:hover {
-            background: linear-gradient(145deg, #2575fc, #6a11cb);
-            box-shadow: 0 4px 12px rgba(106, 17, 203, 0.3);
-        }
-
-        .alert {
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-    </style>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card shadow-lg border-0" style="border-radius: 20px; background: linear-gradient(145deg, #ffffff, #f8f9fa);">
-                    <div class="card-header border-0 py-4" style="background: linear-gradient(145deg, #6a11cb, #2575fc); border-radius: 20px 20px 0 0;">
-                        <h1 class="h3 mb-0 text-white text-center">{{ __('passwords.Reset Password') }}</h1>
+                <!-- ✅ Success Message (Auto-Hide) -->
+                @if (session('status'))
+                    <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 3000)" x-show="show"
+                         class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-6 transition-opacity duration-500 animate-fade-in">
+                        {{ session('status') }}
                     </div>
-                    <div class="card-body px-5 py-4">
-                        @if (session('status'))
-                            <div class="alert alert-success shadow-sm border-0" role="alert" style="border-radius: 12px;">
-                                {{ session('status') }}
-                            </div>
-                        @endif
+                @endif
 
-                        <form method="POST" action="{{ route('password.email') }}">
-                            @csrf
+                <!-- ✅ Reset Password Form -->
+                <form method="POST" action="{{ route('password.email') }}">
+                    @csrf
 
-                            <!-- Email Input -->
-                            <div class="mb-4">
-                                <label for="email" class="form-label fw-bold text-muted">{{ __('passwords.E-Mail Address') }}</label>
-                                <input id="email" type="email" class="form-control form-control-lg border-0 shadow-sm @error('email') is-invalid @enderror"
-                                       name="email" value="{{ old('email') }}" required autocomplete="email" autofocus
-                                       style="border-radius: 12px; background: #f8f9fa;">
-                                @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <!-- Submit Button -->
-                            <div class="d-grid mt-4">
-                                <button type="submit" class="btn btn-lg text-white fw-bold border-0 shadow-sm"
-                                        style="background: linear-gradient(145deg, #6a11cb, #2575fc); border-radius: 12px;">
-                                    {{ __('passwords.Send Password Reset Link') }}
-                                </button>
-                            </div>
-                        </form>
+                    <!-- ✅ Email Input -->
+                    <div class="mb-6">
+                        <label for="email" class="block text-sm font-medium mb-2">{{ __('passwords.E-Mail Address') }}</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value="{{ old('email') }}"
+                            required
+                            autocomplete="email"
+                            autofocus
+                            :class="darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-black'"
+                            class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-300"
+                            placeholder="Enter your email"
+                        >
+                        @error('email')
+                        <span class="text-sm text-red-600 mt-2 block">{{ $message }}</span>
+                        @enderror
                     </div>
-                </div>
+
+                    <!-- ✅ Submit Button with Animation -->
+                    <button
+                        type="submit"
+                        class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-3 px-4 rounded-lg shadow-md hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all transform active:scale-95">
+                        {{ __('passwords.Send Password Reset Link') }}
+                    </button>
+                </form>
             </div>
         </div>
+
+        <!-- ✅ Dark Mode Floating Button -->
+        <button @click="darkMode = !darkMode; localStorage.setItem('dark', darkMode)"
+                class="fixed bottom-5 right-5 bg-gray-200 dark:bg-gray-700 p-3 rounded-full shadow-md transition-all hover:bg-gray-300 dark:hover:bg-gray-600">
+            <svg x-show="!darkMode" class="w-6 h-6 text-gray-700 dark:text-gray-300" fill="none"
+                 stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 3v1m0 16v1m-8-8H3m16 0h1M5.64 5.64l-.71-.71m12.02 12.02l-.71-.71M5.64 18.36l-.71.71m12.02-12.02l-.71.71"/>
+            </svg>
+            <svg x-show="darkMode" class="w-6 h-6 text-gray-700 dark:text-gray-300" fill="none"
+                 stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 3v1m0 16v1m-8-8H3m16 0h1M5.64 5.64l-.71-.71m12.02 12.02l-.71-.71M5.64 18.36l-.71.71m12.02-12.02l-.71.71"/>
+            </svg>
+        </button>
     </div>
 @endsection
