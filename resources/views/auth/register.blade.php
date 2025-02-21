@@ -1,124 +1,102 @@
 @extends('layouts.app')
 
-@section('header')
-@endsection
-
 @section('content')
+    <!-- ✅ Full Page Centering & Dark Mode Support -->
+    <div class="min-h-screen flex items-center justify-center px-4 relative"
+         :class="darkMode ? 'bg-gray-900 text-gray-100' : 'bg-gray-50 text-gray-900'">
 
-    <!-- Display Success Message -->
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
+        <!-- ✅ Registration Card (Fixed Centering Issue) -->
+        <div class="w-full max-w-md absolute  transform  rounded-3xl shadow-lg overflow-hidden transition-all duration-300 animate-fade-in"
+             :class="darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'">
 
-    @if (session()->has('success'))
-        <div class="alert alert-success mb-3">
-            {{ session('success') }}
-        </div>
-    @endif
+            <!-- ✅ Card Header with Hover Effect -->
+            <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-center py-6 transition duration-300 hover:scale-105">
+                <h2 class="text-2xl font-bold text-white">Register</h2>
+            </div>
 
-    <!-- Display Error Messages -->
-    @if(session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
-    @endif
-    <style>
-        /* Custom Styles for Sexy Design */
-        .card {
-            border: none;
-            border-radius: 20px;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+            <!-- ✅ Card Body -->
+            <div class="px-8 py-8">
+                <form method="POST" action="{{ route('register') }}">
+                    @csrf
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-        }
-
-        .form-control {
-            border: none;
-            border-radius: 12px;
-            background: #f8f9fa;
-            transition: all 0.3s ease;
-        }
-
-        .form-control:focus {
-            background: #ffffff;
-            box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
-        }
-
-        .btn {
-            border: none;
-            border-radius: 12px;
-            background: linear-gradient(145deg, #6a11cb, #2575fc);
-            transition: all 0.3s ease;
-        }
-
-        .btn:hover {
-            background: linear-gradient(145deg, #2575fc, #6a11cb);
-            box-shadow: 0 4px 12px rgba(106, 17, 203, 0.3);
-        }
-    </style>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card shadow-lg border-0" style="border-radius: 20px; background: linear-gradient(145deg, #ffffff, #f8f9fa);">
-                    <div class="card-header border-0 py-4" style="background: linear-gradient(145deg, #6a11cb, #2575fc); border-radius: 20px 20px 0 0;">
-                        <h1 class="h3 mb-0 text-white text-center">Register</h1>
+                    <!-- ✅ Name Input -->
+                    <div class="mb-6">
+                        <label for="name" class="block text-sm font-medium mb-2">Name</label>
+                        <input type="text" id="name" name="name"
+                               required autocomplete="name"
+                               :class="darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-black'"
+                               class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-300"
+                               placeholder="Enter your name">
                     </div>
-                    <div class="card-body px-5 py-4">
-                        <form method="POST" action="{{ route('register') }}">
-                            @csrf
 
-                            <!-- Name Input -->
-                            <div class="mb-4">
-                                <label for="name" class="form-label fw-bold text-muted">Name</label>
-                                <input type="text" name="name" id="name" class="form-control form-control-lg border-0 shadow-sm"
-                                       placeholder="Enter your name" required
-                                       style="border-radius: 12px; background: #f8f9fa;"  value="{{ old('name') }}">
-                            </div>
-
-                            <!-- Email Input -->
-                            <div class="mb-4">
-                                <label for="email" class="form-label fw-bold text-muted">Email</label>
-                                <input type="email" name="email" id="email" class="form-control form-control-lg border-0 shadow-sm"
-                                       placeholder="Enter your email" required
-                                       style="border-radius: 12px; background: #f8f9fa;" value="{{ old('email') }}">
-                            </div>
-
-                            <!-- Password Input -->
-                            <div class="mb-4">
-                                <label for="password" class="form-label fw-bold text-muted">Password</label>
-                                <input type="password" name="password" id="password" class="form-control form-control-lg border-0 shadow-sm"
-                                       placeholder="Enter your password" required
-                                       style="border-radius: 12px; background: #f8f9fa;">
-                            </div>
-
-                            <!-- Confirm Password Input -->
-                            <div class="mb-4">
-                                <label for="password_confirmation" class="form-label fw-bold text-muted">Confirm Password</label>
-                                <input type="password" name="password_confirmation" id="password_confirmation" class="form-control form-control-lg border-0 shadow-sm"
-                                       placeholder="Confirm your password" required
-                                       style="border-radius: 12px; background: #f8f9fa;">
-                            </div>
-
-                            <!-- Submit Button -->
-                            <div class="d-grid mt-4">
-                                <button type="submit" class="btn btn-lg text-white fw-bold border-0 shadow-sm"
-                                        style="background: linear-gradient(145deg, #6a11cb, #2575fc); border-radius: 12px;">
-                                    Register
-                                </button>
-                                <a href="{{ route('login') }}" class="text-decoration-none text-primary fw-bold mt-3 custom-hover">
-                                    <i class="bi bi-arrow-left me-2"></i>Or return to the login page
-                                </a>
-                            </div>
-                        </form>
+                    <!-- ✅ Email Input -->
+                    <div class="mb-6">
+                        <label for="email" class="block text-sm font-medium mb-2">Email</label>
+                        <input type="email" id="email" name="email"
+                               required autocomplete="email"
+                               :class="darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-black'"
+                               class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-300"
+                               placeholder="Enter your email">
                     </div>
+
+                    <!-- ✅ Password Input with Show/Hide Feature & Strength Indicator -->
+                    <div class="mb-6 relative" x-data="{ showPassword: false, password: '', strength: '' }">
+                        <label for="password" class="block text-sm font-medium mb-2">Password</label>
+                        <input :type="showPassword ? 'text' : 'password'"
+                               id="password" name="password"
+                               x-model="password"
+                               @input="strength = password.length > 8 ? 'Strong' : password.length > 4 ? 'Medium' : 'Weak'"
+                               required autocomplete="new-password"
+                               :class="darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-black'"
+                               class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-300"
+                               placeholder="Enter your password">
+
+                        <!-- Show/Hide Button -->
+                        <button type="button" @click="showPassword = !showPassword"
+                                class="absolute right-3 top-3 text-gray-500 dark:text-gray-300">
+                            <svg x-show="!showPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M15.232 15.232a6 6 0 0 1-8.464-8.464m.828 10.606a9 9 0 0 1-12.728-12.728m17.928 17.928a9 9 0 0 1-12.728-12.728M12 12l3 3m0 0l-3-3m3 3l-3-3"></path>
+                            </svg>
+                            <svg x-show="showPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M15 12m-3-3a3 3 0 1 0 6 0 3 3 0 1 0-6 0zm9 0a9 9 0 0 1-12.728 12.728M9 9m-3 3a3 3 0 1 0 6 0 3 3 0 1 0-6 0"></path>
+                            </svg>
+                        </button>
+
+                        <!-- ✅ Password Strength Indicator -->
+                        <p x-text="strength"
+                           :class="strength === 'Strong' ? 'text-green-500' : strength === 'Medium' ? 'text-yellow-500' : 'text-red-500'"
+                           class="text-sm mt-1">
+                        </p>
+                    </div>
+
+                    <!-- ✅ Confirm Password Input -->
+                    <div class="mb-6">
+                        <label for="password_confirmation" class="block text-sm font-medium mb-2">Confirm Password</label>
+                        <input type="password" id="password_confirmation" name="password_confirmation"
+                               required autocomplete="new-password"
+                               :class="darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-black'"
+                               class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-300"
+                               placeholder="Confirm your password">
+                    </div>
+
+                    <!-- ✅ Submit Button with Animation -->
+                    <button type="submit"
+                            class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-3 px-4 rounded-lg shadow-md hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all transform active:scale-95">
+                        Register
+                    </button>
+                </form>
+
+                <!-- ✅ Login Link -->
+                <div class="mt-6 text-center">
+                    <a href="{{ route('login') }}"
+                       class="text-sm font-semibold text-blue-600 hover:text-blue-500 underline">
+                        Already have an account? Login here.
+                    </a>
                 </div>
             </div>
         </div>
+
     </div>
 @endsection
