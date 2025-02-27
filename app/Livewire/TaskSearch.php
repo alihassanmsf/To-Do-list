@@ -11,9 +11,6 @@ use Livewire\Component;
 class TaskSearch extends Component
 {
     public $search = '';
-
-    protected $queryString = ['search'];
-
     public function render()
     {
         return view('livewire.task-search', [
