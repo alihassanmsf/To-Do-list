@@ -22,10 +22,10 @@
             <a href="{{ route('profile') }}" class="flex items-center px-4 py-2 rounded-lg hover:text-blue-600">
                 <i class="fas fa-user mr-2"></i> Profile
             </a>
-            <a href="{{ route('admin.manage-users') }}" class="flex items-center px-4 py-2 rounded-lg hover:text-blue-600">
+            <a href="{{ route('admin.users.list') }}" class="flex items-center px-4 py-2 rounded-lg hover:text-blue-600">
                 <i class="fas fa-users mr-2"></i> Users List
             </a>
-            <a href="{{ route('admin.manage-tasks') }}" class="flex items-center px-4 py-2 rounded-lg hover:text-blue-600">
+            <a href="{{ route('admin.tasks.list') }}" class="flex items-center px-4 py-2 rounded-lg hover:text-blue-600">
                 <i class="fas fa-tasks mr-2"></i> Tasks List
             </a>
 
