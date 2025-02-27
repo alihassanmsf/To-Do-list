@@ -28,19 +28,16 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'role:Admin'])->group(function (){
     Route::get('/dashboard',[AdminController::class,'index'])->name('admin.dashboard');
-    Route::get('/dashboard/users/list',[AdminController::class,'usersList'])->name('admin.users.list');
-    Route::get('/dashboard/users/create-user',[AdminController::class,'createUser'])->name('admin.create-user');
-    Route::get('/dashboard/tasks/create-task',[TasksController::class,'create'])->name('admin.create-task');
-    Route::post('/dashboard/users',[AdminController::class,'storeUser'])->name('admin.store-user');
-    Route::get('/dashboard/users/{user}/edit',[AdminController::class,'editUser'])->name('admin.edit-user');
-    Route::put('/dashboard/users/{user}',[AdminController::class,'updateUser'])->name('admin.update-user');
-    Route::get('/dashboard/manage-users', function () {
-        return view('admin.manage_users');
-    })->name('admin.manage-users');
+    Route::get('/dashboard/manage-users',[AdminController::class,'usersList'])->name('admin.users.list');
+    Route::get('/dashboard/manage-users/create-user',[AdminController::class,'createUser'])->name('admin.create-user');
+    Route::post('/dashboard/manage-users/users',[AdminController::class,'storeUser'])->name('admin.store-user');
+    Route::get('/dashboard/manage-users/{user}/edit',[AdminController::class,'editUser'])->name('admin.edit-user');
+    Route::put('/dashboard/manage-users/{user}',[AdminController::class,'updateUser'])->name('admin.update-user');
+    //   Task Region
+    Route::get('/dashboard/manage-tasks',[AdminController::class,'tasksList'])->name('admin.tasks.list');
+    Route::get('/dashboard/manage-tasks/create-task',[TasksController::class,'create'])->name('admin.create-task');
 
-    Route::get('/dashboard/manage-tasks', function () {
-        return view('admin.manage_tasks');
-    })->name('admin.manage-tasks');
+
 
 });
 
