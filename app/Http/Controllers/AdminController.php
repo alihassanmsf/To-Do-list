@@ -49,11 +49,18 @@ class AdminController extends Controller
             'role_id'  => 'required|exists:roles,id',
         ]);
 
-        User::create([
+        $user = User::create([
             'name'     => $request->name,
             'email'    => $request->email,
             'password' => Hash::make($request->password),
             'role_id'  => $request->role_id,
+        ]);
+
+        Activity::create([
+            'user_id' => Auth::id(),
+            'action' => 'Admin Create a User',
+            'target_type' => 'Task',
+            'target_id' => $user->id,
         ]);
 
         return redirect()->route('admin.users.list')->with('message', 'User created successfully!');
@@ -80,6 +87,14 @@ class AdminController extends Controller
             'role_id' => $request->role_id,
             'password' => $request->password ? Hash::make($request->password) : $user->password,
         ]);
+
+        Activity::create([
+            'user_id' => Auth::id(),
+            'action' => 'Admin Update a User',
+            'target_type' => 'Task',
+            'target_id' => $user->id,
+        ]);
+
 
         return redirect()->route('admin.users.list')->with('message', 'User updated successfully!');
     }
