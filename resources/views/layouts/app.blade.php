@@ -5,10 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Laravel App</title>
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @livewireStyles
-    @livewireScripts
-
+    @vite('resources/css/app.css') @livewireStyles
 </head>
 <body x-data="{ darkMode: localStorage.getItem('dark') === 'true' }"
       :class="{ 'dark bg-gray-900 text-gray-100': darkMode, 'bg-gray-50 text-gray-900': !darkMode }"
@@ -126,8 +123,6 @@
 <!-- ✅ Main Content -->
 <main class="flex-grow container mx-auto px-4 py-8">
     @yield('content')
-    @livewireScripts <!-- ✅ Ensure this is present -->
-
 </main>
 
 <!-- ✅ Footer -->
@@ -138,7 +133,7 @@
     </div>
 </footer>
 
-@livewireScripts
+@livewireScripts @vite('resources/js/app.js')
 
 </body>
 </html>
