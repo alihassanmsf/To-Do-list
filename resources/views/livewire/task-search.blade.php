@@ -48,12 +48,6 @@
 
                 <!-- ✅ Action Buttons (Minimal & Clean) -->
                 <div class="flex space-x-3">
-                    <!-- ✅ Edit Button -->
-                    <a href="{{ route('tasks.edit', [$task->id]) }}"
-                       class="px-4 py-2 text-sm font-medium bg-blue-500 text-white rounded-full hover:bg-blue-600 transition shadow-md">
-                        ✏ Edit
-                    </a>
-
                     <!-- ✅ Delete Button (Only for Admin) -->
                     @if(auth()->user()->role->name == 'Admin')
                         <form method="POST" action="{{ route('tasks.destroy', $task->id) }}">
