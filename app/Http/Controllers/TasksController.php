@@ -71,7 +71,12 @@ class TasksController extends Controller
             }
 
 
-            return redirect()->route('tasks.index')->with('success', 'Task created successfully!');
+            if(auth()->user()->role->name === 'Admin'){
+                return redirect()->route('admin.tasks.list')->with('success', 'Task created successfully!');
+            }
+            elseif (auth()->user()->role->name === 'Manager') {
+                return redirect()->route('admin.manage_tasks')->with('success', 'Task created successfully!');
+            }
         }
         catch (AuthorizationException $e){
             return redirect()->route('tasks.index')->with('message', 'You are not allowed to create tasks.');
@@ -170,7 +175,12 @@ class TasksController extends Controller
                 'target_id' => $task->id,
             ]);
 
-            return redirect()->route('tasks.index')->with('success', 'Task updated successfully!');
+            if(auth()->user()->role->name === 'Admin'){
+                return redirect()->route('admin.tasks.list')->with('success', 'Task updated successfully!');
+            }
+            elseif (auth()->user()->role->name === 'Manager') {
+                return redirect()->route('admin.manage_tasks')-with('success', 'Task updated successfully!');
+            }
         }
         catch (AuthorizationException $e){
             return redirect()->route('tasks.index')->with('message', 'You are not allowed to update tasks.');
@@ -185,7 +195,13 @@ class TasksController extends Controller
         try {
             $this->authorize('delete', $task);
             $task->delete();
-            return redirect()->route('admin.tasks.list')->with('success', 'Task deleted successfully!');
+
+            if(auth()->user()->role->name === 'Admin'){
+                return redirect()->route('admin.tasks.list')->with('success', 'Task deleted successfully!');
+            }
+            elseif (auth()->user()->role->name === 'Manager') {
+                return redirect()->route('admin.manage_tasks')->with('success', 'Task deleted successfully!');
+            }
         }
         catch (AuthorizationException $e){
             return redirect()->route('tasks.index')->with('message', 'You are not allowed to delete tasks.');
