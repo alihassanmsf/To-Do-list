@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use App\Models\Task;
 use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,8 +30,16 @@ class TasksController extends Controller
      */
     public function create()
     {
-        $users = User::all(); // Fetch all users for the "Assigned For" dropdown
-        return view('tasks.form', compact('users'));
+        try {
+            $this->authorize('create', Task::class);
+            $users = User::all(); // Fetch all users for the "Assigned For" dropdown
+            return view('tasks.form', compact('users'));
+        }
+        catch (AuthorizationException $e){
+
+            return redirect()->route('tasks.index')->with('message', 'You are not allowed to create tasks.');
+        }
+
     }
 
     /**
@@ -38,26 +47,35 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'due_date' => 'required|date',
-            'priority' => 'required|string|in:low,medium,high',
-            'status' => 'required|in:pending,in_progress,completed',
-            'assigned_for' => 'nullable|exists:users,id',
-        ]);
+        try {
+            $this->authorize('create', Task::class);
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'description' => 'required|string',
+                'due_date' => 'required|date',
+                'priority' => 'required|string|in:low,medium,high',
+                'status' => 'required|in:pending,in_progress,completed',
+                'assigned_for' => 'nullable|exists:users,id',
+            ]);
 
-        $validated['created_by'] = auth()->id(); // Set the creator
-        $task = Task::create($validated);
+            $validated['created_by'] = auth()->id(); // Set the creator
+            $task = Task::create($validated);
 
-        Activity::create([
-            'user_id' => Auth::id(),
-            'action' => 'Create a Task',
-            'target_type' => 'Task',
-            'target_id' => $task->id,
-        ]);
+            if (auth()->user()->role->name === 'Admin') {
+                Activity::create([
+                    'user_id' => Auth::id(),
+                    'action' => 'Admin  Create a Task',
+                    'target_type' => 'Task',
+                    'target_id' => $task->id,
+                ]);
+            }
 
-        return redirect()->route('tasks.index')->with('success', 'Task created successfully!');
+
+            return redirect()->route('tasks.index')->with('success', 'Task created successfully!');
+        }
+        catch (AuthorizationException $e){
+            return redirect()->route('tasks.index')->with('message', 'You are not allowed to create tasks.');
+        }
     }
 
     /**
@@ -116,8 +134,15 @@ class TasksController extends Controller
      */
     public function edit(Task $task)
     {
-        $users = User::all(); // Fetch all users for the "Assigned For" dropdown
-        return view('tasks.form', compact('task', 'users'));
+        try {
+            $this->authorize('update', $task);
+            $users = User::all(); // Fetch all users for the "Assigned For" dropdown
+            return view('tasks.form', compact('task', 'users'));
+        }
+        catch (AuthorizationException $e){
+            return redirect()->route('tasks.index')->with('message', 'You are not allowed to edit tasks.');
+        }
+
     }
 
     /**
@@ -125,25 +150,31 @@ class TasksController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'due_date' => 'required|date',
-            'priority' => 'required|string|in:low,medium,high',
-            'status' => 'required|in:pending,in_progress,completed',
-            'assigned_for' => 'nullable|exists:users,id',
-        ]);
+        try {
+            $this->authorize('update', $task);
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'description' => 'required|string',
+                'due_date' => 'required|date',
+                'priority' => 'required|string|in:low,medium,high',
+                'status' => 'required|in:pending,in_progress,completed',
+                'assigned_for' => 'nullable|exists:users,id',
+            ]);
 
-        $task->update($validated);
+            $task->update($validated);
 
-        Activity::create([
-            'user_id' => Auth::id(),
-            'action' => 'Update a Task',
-            'target_type' => 'Task',
-            'target_id' => $task->id,
-        ]);
+            Activity::create([
+                'user_id' => Auth::id(),
+                'action' => 'Update a Task',
+                'target_type' => 'Task',
+                'target_id' => $task->id,
+            ]);
 
-        return redirect()->route('tasks.index')->with('success', 'Task updated successfully!');
+            return redirect()->route('tasks.index')->with('success', 'Task updated successfully!');
+        }
+        catch (AuthorizationException $e){
+            return redirect()->route('tasks.index')->with('message', 'You are not allowed to update tasks.');
+        }
     }
 
     /**
