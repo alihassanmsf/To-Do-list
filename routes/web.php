@@ -18,8 +18,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('tasks.index');
+})->middleware('auth');
 
 
 //Route::middleware(['auth', 'role:admin'])->group(function () {
