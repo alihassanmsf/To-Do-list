@@ -180,8 +180,15 @@ class TasksController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Task $task)
     {
-        //
+        try {
+            $this->authorize('delete', $task);
+            $task->delete();
+            return redirect()->route('admin.tasks.list')->with('success', 'Task deleted successfully!');
+        }
+        catch (AuthorizationException $e){
+            return redirect()->route('tasks.index')->with('message', 'You are not allowed to delete tasks.');
+        }
     }
 }
