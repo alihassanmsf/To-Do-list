@@ -52,6 +52,15 @@
                                class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
                                 ✏ Edit
                             </a>
+                            <form action="{{ route('admin.delete-user', $usr) }}" method="POST" class="inline-block">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                        class="px-3 py-1 ml-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-300 transform hover:scale-105"
+                                        onclick="return confirm('Are you sure you want to delete this user?')">
+                                    ❌ Delete
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach
