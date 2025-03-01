@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Laravel App</title>
+    <title>To Do App</title>
 
     @vite('resources/css/app.css') @livewireStyles
 </head>
@@ -32,7 +32,7 @@
 
         <!-- ✅ Logo -->
         <a href="/" class="text-2xl font-bold text-blue-600 dark:text-blue-400 hover:scale-105 transition">
-            My Laravel App
+            To Do App
         </a>
 
         <!-- ✅ Navigation Links -->
