@@ -1,4 +1,4 @@
-<img width="1399" alt="Screenshot 1446-09-01 at 11 29 29 PM" src="https://github.com/user-attachments/assets/3b387f9d-6806-4eef-b7d5-c48f9158f342" /># To-Do List App
+# To-Do List App
 
 A simple and efficient To-Do List application built using **Laravel 10** and **Tailwind CSS**.
 
@@ -24,7 +24,7 @@ A simple and efficient To-Do List application built using **Laravel 10** and **T
 
 1. **Clone the repository**
    ```sh
-   git clone https://github.com/yourusername/todo-list.git
+   git clone https://github.com/alihassanmsf/To-Do-list.git
    cd todo-list
    ```
 
@@ -66,7 +66,6 @@ A simple and efficient To-Do List application built using **Laravel 10** and **T
 
 ## Screenshots
 
-(Add some screenshots of the app here)
 <img width="1399" alt="Screenshot 1446-09-01 at 11 29 29 PM" src="https://github.com/user-attachments/assets/baadfa83-c653-4943-b046-101e547d5b9f" />
 <img width="1399" alt="Screenshot 1446-09-01 at 11 35 38 PM" src="https://github.com/user-attachments/assets/adc6664a-df41-4de3-9a9c-d054df5a8dab" />
 <img width="1373" alt="Screenshot 1446-09-01 at 11 40 07 PM" src="https://github.com/user-attachments/assets/39f2a74b-21fe-46f4-81af-a751d837cee8" />
