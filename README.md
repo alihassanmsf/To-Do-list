@@ -97,10 +97,6 @@ A simple and efficient To-Do List application built using **Laravel 10** and **T
 
 Feel free to fork this repository and make improvements. Contributions are welcome!
 
-## License
-
-This project is licensed under the MIT License.
-
 ---
 
 **Happy Coding! 🚀**
