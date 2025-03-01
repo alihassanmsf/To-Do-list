@@ -99,6 +99,13 @@ class AdminController extends Controller
         return redirect()->route('admin.users.list')->with('message', 'User updated successfully!');
     }
 
+    public function deleteUser(User $user)
+    {
+        $user->delete();
+        return redirect()->route('admin.users.list')->with('message', 'User deleted successfully!');
+
+    }
+
     public function tasksList(Request $request)
     {
         if (auth()->user()->role->name === 'Admin') {
