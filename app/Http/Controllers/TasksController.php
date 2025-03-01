@@ -176,10 +176,10 @@ class TasksController extends Controller
             ]);
 
             if(auth()->user()->role->name === 'Admin'){
-                return redirect()->route('admin.tasks.list')->with('success', 'Task updated successfully!');
+                return redirect()->route('admin.tasks.list')->with('message', 'Task updated successfully!');
             }
             elseif (auth()->user()->role->name === 'Manager') {
-                return redirect()->route('admin.manage_tasks')-with('success', 'Task updated successfully!');
+                return redirect()->route('admin.manage_tasks')-with('message', 'Task updated successfully!');
             }
         }
         catch (AuthorizationException $e){
@@ -197,10 +197,10 @@ class TasksController extends Controller
             $task->delete();
 
             if(auth()->user()->role->name === 'Admin'){
-                return redirect()->route('admin.tasks.list')->with('success', 'Task deleted successfully!');
+                return redirect()->route('admin.tasks.list')->with('message', 'Task deleted successfully!');
             }
             elseif (auth()->user()->role->name === 'Manager') {
-                return redirect()->route('admin.manage_tasks')->with('success', 'Task deleted successfully!');
+                return redirect()->route('admin.manage_tasks')->with('message', 'Task deleted successfully!');
             }
         }
         catch (AuthorizationException $e){
