@@ -25,7 +25,7 @@ A simple and efficient To-Do List application built using **Laravel 10** and **T
 1. **Clone the repository**
    ```sh
    git clone https://github.com/alihassanmsf/To-Do-list.git
-   cd todo-list
+   cd To-Do-list
    ```
 
 2. **Install dependencies**
@@ -60,10 +60,28 @@ A simple and efficient To-Do List application built using **Laravel 10** and **T
 
 ## Usage
 
-- Open the app in a browser.
-- Create a new task and manage your to-do list efficiently.
-- If authentication is enabled, register/login before using the app.
+### **User Registration & Role Assignment**
+- Any user can **register** using the signup form.
+- Only the **Admin** has the authority to **create and assign** the **Manager role** to a registered user.
 
+### **Admin Functionalities**
+- Create and manage **Managers**.
+- Assign roles to users.
+- Create, edit, and delete **tasks**.
+- Track task progress from the **activity logs**.
+
+### **Manager Functionalities**
+- View and manage assigned **tasks**.
+- Create and assign tasks to users.
+- Track task progress through the **activity logs**.
+- Mark tasks as **completed** or **in progress**.
+
+### **Task Tracking**
+- The **Admin and Manager** can monitor task activities from the **Activity Log**.
+- The activity log records updates such as:
+  - Task creation.
+  - Status changes (e.g., In Progress → Completed).
+  - Edits made to tasks.
 ## Screenshots
 
 <img width="1399" alt="Screenshot 1446-09-01 at 11 29 29 PM" src="https://github.com/user-attachments/assets/baadfa83-c653-4943-b046-101e547d5b9f" />
