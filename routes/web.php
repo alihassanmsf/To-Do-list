@@ -33,6 +33,7 @@ Route::middleware(['auth', 'role:Admin'])->group(function (){
     Route::post('/dashboard/manage-users/users',[AdminController::class,'storeUser'])->name('admin.store-user');
     Route::get('/dashboard/manage-users/{user}/edit',[AdminController::class,'editUser'])->name('admin.edit-user');
     Route::put('/dashboard/manage-users/{user}',[AdminController::class,'updateUser'])->name('admin.update-user');
+    Route::delete('/dashboard/manage-users/{user}',[AdminController::class,'deleteUser'])->name('admin.delete-user');
     //   Task Region
     Route::get('/dashboard/manage-tasks',[AdminController::class,'tasksList'])->name('admin.tasks.list');
     Route::get('/dashboard/manage-tasks/create-task',[TasksController::class,'create'])->name('admin.create-task');
