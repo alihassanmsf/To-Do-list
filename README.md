@@ -1,66 +1,89 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<img width="1399" alt="Screenshot 1446-09-01 at 11 29 29 PM" src="https://github.com/user-attachments/assets/3b387f9d-6806-4eef-b7d5-c48f9158f342" /># To-Do List App
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A simple and efficient To-Do List application built using **Laravel 10** and **Tailwind CSS**.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Add, edit, and delete tasks
+- Mark tasks as completed or in progress
+- Role-based access control (Admin & Manager)
+- Admin dashboard for managing users and tasks
+- Manager dashboard for overseeing task progress
+- User authentication 
+- Responsive UI with Tailwind CSS
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Installation
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Prerequisites
+- PHP 8.1 or higher
+- Composer
+- Node.js & npm
+- MySQL or SQLite
 
-## Learning Laravel
+### Steps
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. **Clone the repository**
+   ```sh
+   git clone https://github.com/yourusername/todo-list.git
+   cd todo-list
+   ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+2. **Install dependencies**
+   ```sh
+   composer install
+   npm install
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3. **Set up environment**
+   ```sh
+   cp .env.example .env
+   php artisan key:generate
+   ```
+   Configure the `.env` file with database credentials.
 
-## Laravel Sponsors
+4. **Run migrations**
+   ```sh
+   php artisan migrate
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+5. **Run seeders** (to create roles and the admin user)
+   ```sh
+   php artisan db:seed --class=RolesTableSeeder
+   php artisan db:seed --class=AdminSeeder
+   ```
 
-### Premium Partners
+6. **Start the development server**
+   ```sh
+   php artisan serve
+   ```
+   The app should now be running at `http://127.0.0.1:8000`.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+## Usage
+
+- Open the app in a browser.
+- Create a new task and manage your to-do list efficiently.
+- If authentication is enabled, register/login before using the app.
+
+## Screenshots
+
+(Add some screenshots of the app here)
+<img width="1399" alt="Screenshot 1446-09-01 at 11 29 29 PM" src="https://github.com/user-attachments/assets/baadfa83-c653-4943-b046-101e547d5b9f" />
+<img width="1399" alt="Screenshot 1446-09-01 at 11 35 38 PM" src="https://github.com/user-attachments/assets/adc6664a-df41-4de3-9a9c-d054df5a8dab" />
+<img width="1373" alt="Screenshot 1446-09-01 at 11 40 07 PM" src="https://github.com/user-attachments/assets/39f2a74b-21fe-46f4-81af-a751d837cee8" />
+<img width="1404" alt="Screenshot 1446-09-01 at 11 51 28 PM" src="https://github.com/user-attachments/assets/ec4cb94d-f2f3-4382-bc4b-a1afa3639352" />
+
+
+
+
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Feel free to fork this repository and make improvements. Contributions are welcome!
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the MIT License.
+
+---
+
+**Happy Coding! 🚀**
