@@ -37,10 +37,12 @@
 
         <!-- ✅ Navigation Links -->
         <div class="hidden md:flex items-center space-x-6">
-            @if(auth()->user()->role === 'User')
-            <a href="/" class="hover:text-blue-600 transition">Home</a>
-            <a href="/tasks" class="hover:text-blue-600 transition">Tasks</a>
-            @endif
+            @auth()
+                @if(auth()->user()->role->name === 'User')
+                    <a href="/" class="hover:text-blue-600 transition">Home</a>
+                    <a href="/tasks" class="hover:text-blue-600 transition">Tasks</a>
+                @endif
+            @endauth
         </div>
         <div x-data="{ profileOpen: false }" class="relative">
 
